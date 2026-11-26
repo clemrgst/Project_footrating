@@ -1,0 +1,8 @@
+[
+  {"goalScored": 0, "playerankScore": 0.0053, "matchId": 1000, "playerId": 1, "roleCluster": "right CB", "minutesPlayed": 90},
+  {"goalScored": 1, "playerankScore": 0.0210, "matchId": 1000, "playerId": 2, "roleCluster": "central FW", "minutesPlayed": 75},
+  {"goalScored": 0, "playerankScore": -0.0012, "matchId": 1000, "playerId": 3, "roleCluster": "left CB", "minutesPlayed": 15},
+  {"goalScored": 0, "playerankScore": 0.0009, "matchId": 1001, "playerId": 1, "roleCluster": "right CB", "minutesPlayed": 41},
+  {"goalScored": 2, "playerankScore": 0.0450, "matchId": 1001, "playerId": 2, "roleCluster": "central FW", "minutesPlayed": 90},
+  {"goalScored": 0, "playerankScore": 0.0031, "matchId": 1001, "playerId": 4, "roleCluster": "right MF", "minutesPlayed": 90}
+]

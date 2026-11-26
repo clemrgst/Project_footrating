@@ -43,8 +43,8 @@ Status: planned layout. Parts marked *(planned)* do not exist yet.
 
 | Folder | Role | Tracked by git |
 |---|---|---|
-| `src/footrating/` | Python package: all reusable code. `config.py` loads `configs/default.yaml` and the global seed. `data/`, `features/`, `split.py`, `models/`, `evaluation/` *(planned)* | yes |
-| `scripts/` | Command-line utilities: synthetic fixture (`make_fixture.py`), Moodle archive (`make_zip.py`) | yes |
+| `src/footrating/` | Python package: all reusable code. `config.py` loads `configs/default.yaml` and the global seed. `data/` downloads the raw files (`download.py`), writes the inventory (`inventory.py`) and builds the quarantine table (`side_info.py`). `features/`, `split.py`, `models/`, `evaluation/` *(planned)* | yes |
+| `scripts/` | Command-line utilities: synthetic fixture (`make_fixture.py`), Moodle archive (`make_zip.py`), raw data download, inventory and quarantine table (`download_raw_data.py`, T1) | yes |
 | `tests/` | pytest suite run by `make check`; `tests/fixtures/` holds a small synthetic sample | yes |
 | `notebooks/` | Exploration notebooks; they only call functions from `src/` and use relative paths | yes |
 | `configs/` | YAML configs; `default.yaml` holds the seed, split fractions and paths | yes |
