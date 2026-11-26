@@ -1,0 +1,42 @@
+[project]
+name = "footrating"
+version = "0.1.0"
+description = "Predict per-match football player ratings (PlayeRank) from in-match Wyscout statistics."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "numpy",
+    "pandas",
+    "pyarrow",
+    "scikit-learn",
+    "scipy",
+    "matplotlib",
+    "pyyaml",
+    "requests",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "ruff",
+    "pre-commit",
+    "ipykernel",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/footrating"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "NPY", "PD"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

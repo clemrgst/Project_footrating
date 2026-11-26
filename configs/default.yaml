@@ -1,0 +1,14 @@
+# Global configuration shared by every script and notebook.
+# The seed is read through footrating.config.get_seed(); never hard-code another seed.
+seed: 42
+
+split:
+  # Chronological split by match (see report/project_specification.md, Section 9).
+  train: 0.70
+  validation: 0.15
+  test: 0.15
+
+paths:
+  raw: data/raw
+  processed: data/processed
+  results: results

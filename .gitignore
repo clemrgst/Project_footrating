@@ -1,0 +1,50 @@
+# Data and models (never committed: raw Wyscout/PlayeRank files, processed tables,
+# the quarantine table data/processed/playerank_side_info.parquet, trained models)
+data/*
+!data/README.md
+!data/raw/
+!data/processed/
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+models/
+*.parquet
+*.feather
+*.pkl
+*.joblib
+*.h5
+
+# Personal files
+docs/planning/
+CLAUDE.local.md
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Editors
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build
+*.zip
+
+# Course instructions (teacher material, kept local in this public repo)
+docs/LAB5-FullProject.pdf
+
+# Start-up guide PDF (kept local; removed from the repository)
+docs/guide/
