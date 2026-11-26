@@ -2,6 +2,38 @@
 
 High-stakes prompts used with the AI assistant (target: 4 to 6 entries, at least one per team member).
 
+## Entry template
+
+Copy this block for each new entry, numbered in order.
+
+```markdown
+## Entry N — <short title>
+
+- **Date:** YYYY-MM-DD
+- **Author:** Clément / Paul
+- **Module:** M1 / M2 / M3 / M4 / project-wide
+- **Objective:** what we wanted from the AI, in one sentence.
+
+**Exact prompt:**
+
+    <the prompt exactly as sent>
+
+**Constraints imposed on the AI:**
+
+- *Data schema:* …
+- *Assumptions:* …
+- *Leakage guardrails:* …
+
+**Summary of the AI's answer:**
+
+- …
+
+**What we kept / rejected:**
+
+- Kept: …
+- Rejected or corrected: … (and why)
+```
+
 ## Entry 1 — Project definition and dataset selection
 
 - **Date:** 2026-11-21
