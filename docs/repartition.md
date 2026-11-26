@@ -61,21 +61,26 @@ baseline table in `report/` on `main`.
 
 | Clément | Paul |
 |---|---|
+| **T22 · all** Quality automation: automatic lint and format on every change, a review checklist applied before every PR, and a proposal for an automated PR review in CI (not activated). **Done when:** each part is tested on a small real task and documented. | Starts **T12** and the bootstrap function of T14 (see below) while T22 is in review. |
 | **T10 · M4** Gradient boosting tuned with `GroupKFold` by match on train. **Done when:** one line per run in `results/experiments.csv` (config, seed, scores); search budget written in the config. | **T12 · M4 (Clément's)** Random Forest tuned with `GroupKFold`. **Done when:** same criterion as T10. |
 | **T11 · M4** Feature importance (permutation, SHAP) and football sanity check per position; flag any feature that looks like leakage. **Done when:** figure and table in `results/`, comment in the PR. | **T13 · M4 (Clément's)** Position-aware model (one model per position, or interactions). **Done when:** same criterion as T10. |
 | | **T14 · M4 (Clément's)** Comparison table with bootstrap 95 % CIs over test matches; the test set is used once, here. **Done when:** table in `results/` produced by one command. |
 
 **Dependencies:**
+- Clément starts T22 only after Paul's T9 PR (baseline) is merged, and T10 only after T22
+  is merged.
+- Paul does not wait for T22: he starts T12 and the T14 bootstrap function, then applies the
+  T22 checks to his PR once T22 is merged.
 - Clément starts T11 only after T10 is merged.
 - Paul starts T14 only after T10, T12 and T13 are merged. Meanwhile he writes the bootstrap
   function and tests it on the fixture.
 
-**Reviews:** Paul reviews T10 and T11; Clément reviews T12, T13 and T14.
+**Reviews:** Paul reviews T22, T10 and T11; Clément reviews T12, T13 and T14.
 
 **Governance checkpoint:** Clément writes a PROMPT_LOG entry for T10, Paul one
 for T13. Each of us adds an AI_AUDIT entry if a new real error was caught.
 
-**Sync point (end of week 3):** T10–T14 merged; `results/experiments.csv` and the comparison
+**Sync point (end of week 3):** T22 and T10–T14 merged; `results/experiments.csv` and the comparison
 table on `main`.
 
 ## Week 4 — Report and defence (30 %)
@@ -97,7 +102,7 @@ from `main`.
 
 | | Clément | Paul |
 |---|---|---|
-| Tasks | T2, T5, T6, T8, T10, T11, T15, T17, T19, T21 | T1, T4, T7, T9, T12, T13, T14, T16, T18, T19, T20 |
-| Estimated load (spec, Section 10) | about 30 h + T21 | about 31 h + T20 |
+| Tasks | T2, T5, T6, T8, T10, T11, T15, T17, T19, T21, T22 | T1, T4, T7, T9, T12, T13, T14, T16, T18, T19, T20 |
+| Estimated load (spec, Section 10) | about 30 h + T21, T22 | about 31 h + T20 |
 | PROMPT_LOG entries | 1, 2 (done), T10 | T4, T13 (and optionally T9) |
 | AI_AUDIT entries | at least 1 (week 2 checkpoint) | at least 1 (week 2 checkpoint) |
