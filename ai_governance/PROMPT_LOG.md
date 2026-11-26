@@ -105,3 +105,48 @@ Copy this block for each new entry, numbered in order.
 - Corrected: the commands the AI gave us to check its work (`git log`, `mingw32-make check`) failed because they did not start with `cd` into the project folder.
 - Changed: the start-up guide PDF was removed from git and ignored (the AI had kept it tracked and only excluded it from the zip); the zip is named `Group_footrating_DS_Project.zip` because we have no group number.
 - [To check by us before the submission.]
+
+## Entry 3 — Loop engineering, levels 1 and 2
+
+- **Date:** 2026-11-26
+- **Author:** Paul
+- **Module:** project-wide (infrastructure; quality gate for all modules)
+- **Objective:** make sure `make check` is a reliable, fast judge, then build a goal-driven loop (`/boucle` skill + `docs/PLAN.md`) that works on one task until `make check` exits 0, with a cap and a documented way to stop it (prompt 5, T20).
+
+**Exact prompt:**
+
+```
+Mets en place notre loop engineering, niveaux 1 et 2. Arrête-toi après chaque niveau pour me montrer ce que tu as fait et attendre mon accord. Note dans docs/boucles.md où nous en sommes.
+
+Niveau 1, le juge : vérifie que `make check` est fiable (il échoue quand un test échoue, passe sinon) et rapide. Il doit inclure les tests de schéma des données et de non-fuite du split dès qu'ils existent.
+
+Niveau 2, la boucle par objectif : crée docs/PLAN.md (tâches, module, propriétaire, état, prochain pas) et un skill /boucle qui prend une tâche, travaille jusqu'à ce que `make check` renvoie 0, s'arrête après 10 tours, met à jour docs/PLAN.md et résume ce qui bloque. /boucle ne modifie jamais un test pour le faire passer sans me le signaler.
+
+Pour chaque boucle, écris dans docs/boucles.md : déclencheur, condition d'arrêt, plafond, comment la couper. Vérifie la syntaxe dans la documentation officielle, et teste chaque niveau sur une petite tâche réelle.
+
+Avant de coder, donne-moi un plan étape → vérification et attends mon accord. Montre-moi chaque document avant de l'enregistrer. Ne fais aucun commit et ne touche pas au miroir.
+```
+
+**Constraints imposed on the AI:**
+
+- *Process:* give a `step → verify` plan and wait for our OK before coding; stop after each level; show every document before saving it; no commit; do not touch the mirror repository; stop before the real `/boucle` test so that we type `/boucle` ourselves.
+- *Evidence:* check the skill syntax in the official documentation and cite the exact page; do not use a frontmatter field that is not on that page; do not add a task to `docs/PLAN.md` without a source.
+- *Leakage guardrails:* `make check` must include the data schema tests and the split leakage tests as soon as they exist; `/boucle` never modifies an existing test to make it pass without telling us.
+- *Loop limits:* one round = one run of `make check`, cap of 10 rounds; the real test is a minimal schema test on the synthetic fixture only (the real player-match table is T4).
+
+**Summary of the AI's answer:**
+
+- Level 1: no change to the `Makefile`. On the clean branch `make check` exited 0 in 3.9 s (6 passed); with a temporary failing test it exited 2 (`1 failed, 6 passed`); with a temporary lint error (unused import) it exited 2 before the tests ran. The temporary files were deleted and `git status` was shown empty. Pytest collects all of `tests/`, so future schema and leakage tests join the judge with no change.
+- Level 2: `docs/PLAN.md` (state of tasks T1–T22 from `docs/repartition.md`, Section 10 of the specification and `git log`); `.claude/skills/boucle/SKILL.md` (manual trigger only, optional sub-goal after the task ID, cap of 10 rounds, stop before changing an existing test, never edit the judge); `docs/boucles.md` (trigger, stop condition, cap, how to cut it, for each level); one line added to `docs/ARCHITECTURE.md`. Skill syntax checked on https://code.claude.com/docs/en/skills and stop keys on https://code.claude.com/docs/en/interactive-mode.
+- Real test: `/boucle T20 minimal schema test on tests/fixtures/sample_player_match.csv only …` created `tests/test_fixture_schema.py` (column list and unique `matchId` + `playerId`); round 1/10, `make check` exit 0, 8 passed.
+- Errors the AI caught itself: it first ran `mingw32-make`, which is not installed on this PC, then used GNU `make`; its first temporary failing test (`assert False`) was stopped by ruff (B011) before pytest ran, so it repeated the test with a lint-clean failing assertion.
+- No commit yet (files left uncommitted for our review).
+
+**What we kept / rejected:**
+
+- Kept: the unchanged `Makefile`; the "do not bend the judge" rule in `/boucle` (no edits to the `Makefile`, CI, ruff or pytest settings, no `# noqa`), which the AI added beyond our request; the T22 row in `docs/PLAN.md` (source: `docs/repartition.md:70`).
+- Corrected: the stop rule "stop before any change in `tests/`" was too broad and would have blocked the real test; we limited it to changing an existing test to make it pass (new test files stay allowed).
+- Corrected: the reproduce command `make check; echo $?` is wrong in PowerShell (`$?` is True/False); we asked for `echo $LASTEXITCODE` (PowerShell) or `echo $?` (bash).
+- Corrected: the owner of T3 was marked NOT VERIFIED; Section 10 of `report/project_specification.md` gives "Both".
+- Corrected: `/boucle T20` would have read T20's own "Done when" and looped on itself; we added an optional sub-goal after the task ID, which replaces the "Done when" for that loop.
+- Added: a limitation in `docs/boucles.md`: the goal was met in round 1, so the run did not exercise recovery from a failure or the 10-round cap.
