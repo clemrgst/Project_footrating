@@ -43,11 +43,11 @@ Status: planned layout. Parts marked *(planned)* do not exist yet.
 
 | Folder | Role | Tracked by git |
 |---|---|---|
-| `src/footrating/` | Python package: all reusable code. `config.py` loads `configs/default.yaml` and the global seed. `data/` downloads the raw files (`download.py`), writes the inventory (`inventory.py`) and builds the quarantine table (`side_info.py`). `features/`, `split.py`, `models/`, `evaluation/` *(planned)* | yes |
-| `scripts/` | Command-line utilities: synthetic fixture (`make_fixture.py`), Moodle archive (`make_zip.py`), raw data download, inventory and quarantine table (`download_raw_data.py`, T1) | yes |
+| `src/footrating/` | Python package: all reusable code. `config.py` loads `configs/default.yaml` and the global seed. `data/` downloads the raw files (`download.py`), writes the inventory (`inventory.py`) and builds the quarantine table (`side_info.py`). `split.py` assigns each match to train, validation or test (T2). `features/`, `models/`, `evaluation/` *(planned)* | yes |
+| `scripts/` | Command-line utilities: synthetic fixture (`make_fixture.py`), Moodle archive (`make_zip.py`), raw data download, inventory and quarantine table (`download_raw_data.py`, T1), chronological split (`make_split.py`, T2) | yes |
 | `tests/` | pytest suite run by `make check`; `tests/fixtures/` holds a small synthetic sample | yes |
 | `notebooks/` | Exploration notebooks; they only call functions from `src/` and use relative paths | yes |
-| `configs/` | YAML configs; `default.yaml` holds the seed, split fractions and paths | yes |
+| `configs/` | YAML configs; `default.yaml` holds the seed, split fractions and paths; `split_matches.csv` is the frozen split, read by every module | yes |
 | `data/raw/`, `data/processed/` | Downloaded files and tables built by scripts | no (only `data/README.md`) |
 | `results/` | Metrics and tables written by scripts; every number in the report comes from here | yes |
 | `report/` | Project specification and final report | yes |
@@ -58,7 +58,7 @@ Status: planned layout. Parts marked *(planned)* do not exist yet.
 ## Guardrails built into the layout
 
 - The split is by match and chronological; tests check that no `matchId` is in two sets and
-  that test dates come after train dates *(planned, M3)*.
+  that test dates come after train dates (`tests/test_split.py`).
 - Every transformation is fitted inside a scikit-learn `Pipeline` on the training set only.
 - Columns published with the target (`minutesPlayed`, `goalScored`) live in a separate
   quarantine table until a written decision allows them.
