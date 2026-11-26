@@ -52,7 +52,7 @@ Status: planned layout. Parts marked *(planned)* do not exist yet.
 | `results/` | Metrics and tables written by scripts; every number in the report comes from here | yes |
 | `report/` | Project specification and final report | yes |
 | `ai_governance/` | `CONTRIBUTIONS.md`, `PROMPT_LOG.md`, `AI_AUDIT.md` | yes |
-| `docs/` | This file, `decisions/` (one record per choice), `journal.md` (hand-over notes) | yes |
+| `docs/` | This file, `decisions/` (one record per choice), `journal.md` (hand-over notes), `PLAN.md` (task state), `boucles.md` (loops) | yes |
 | `.github/` | CI (`make check` on each pull request), PR and issue templates | yes |
 
 ## Guardrails built into the layout
